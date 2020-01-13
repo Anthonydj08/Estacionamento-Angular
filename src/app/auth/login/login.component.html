@@ -1,0 +1,40 @@
+<h1 id="title" class="title">Login</h1>
+<p class="sub-title">Olá! Faça login com seu email.</p>
+
+
+<form aria-labelledby="title">
+
+    <div class="form-control-group">
+        <label class="label">Email:</label>
+        <input nbInput [(ngModel)]="login.email" name="email" pattern=".+@.+..+" placeholder="Endereço de Email" fullWidth>
+
+    </div>
+
+    <div class="form-control-group">
+        <label class="label">Senha:</label>
+        <input nbInput [(ngModel)]="login.senha" type="password" name="senha" placeholder="Senha" fullWidth>
+
+    </div>
+
+    <div class="form-control-group accept-group">
+        <nb-checkbox name="rememberMe">Lembrar me</nb-checkbox>
+        <a class="forgot-password" routerLink="../request-password">Esqueceu a senha?</a>
+    </div>
+
+    <button nbButton fullWidth status="success" [disabled]="!login.email || !login.senha" (click)="loginEmail()">
+    LogIn
+  </button>
+</form>
+
+<section class="links" aria-label="Social sign in">
+    ou entre com:
+    <div class="socials">
+        <ng-container>
+
+        </ng-container>
+    </div>
+</section>
+
+<section class="another-action" aria-label="Register">
+    Não possui uma conta? <a class="text-link" routerLink="../register">Registrar</a>
+</section>

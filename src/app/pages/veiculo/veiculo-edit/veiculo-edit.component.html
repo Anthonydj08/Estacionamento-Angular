@@ -1,0 +1,51 @@
+<nb-card>
+    <nb-card-header>Inserir veículo</nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputModelo" class="label">Modelo</label>
+                    <input type="text" nbInput fullWidth id="inputModelo" placeholder="Modelo" [(ngModel)]="editVeiculo.modelo">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputPlaca" class="label">Placa</label>
+                    <input type="text" oninput="this.value = this.value.toUpperCase()" nbInput fullWidth id="inputPlaca" placeholder="Placa" [(ngModel)]="editVeiculo.placa">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputCor" class="label">Cor</label>
+                    <input type="text" nbInput fullWidth id="inputCor" placeholder="Cor" [(ngModel)]="editVeiculo.cor">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputFabricante" class="label">Fabricante</label>
+                    <input type="text" nbInput fullWidth id="inputFabricante" placeholder="Fabricante" [(ngModel)]="editVeiculo.fabricante">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputTipo" class="label">Tipo</label>
+                    <input type="text" nbInput fullWidth id="inputTipo" placeholder="Tipo" [(ngModel)]="editVeiculo.tipo">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputEmail" class="label">Email do proprietário</label>
+                    <input type="email" nbInput fullWidth id="inputEmail" placeholder="E-mail" [(ngModel)]="editVeiculo.usuarioEmail">
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button (click)="cancelar()" nbButton outline status="danger">Cancelar</button>
+        <button (click)="edit()" type="submit" nbButton outline status="primary">Salvar</button>
+    </nb-card-footer>
+</nb-card>

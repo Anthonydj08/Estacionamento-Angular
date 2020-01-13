@@ -1,0 +1,19 @@
+<nb-card>
+    <nb-card-header>
+        <div>
+            <nb-icon class="icone" icon="video-outline"></nb-icon>
+            <span class="titulo">Ao Vivo</span>
+        </div>
+        <button id="snap" (click)="capture()" nbButton outline status="primary">Tirar foto</button>
+    </nb-card-header>
+    <nb-card-body>
+        <canvas #canvas id="canvas" width="540" height="480"></canvas>
+        <div><video #video id="video" autoplay></video></div>
+        <!-- <ul>
+            <li *ngFor="let c of captures">
+                <img src="{{ c }}" height="50" />
+            </li>
+        </ul>-->
+        <p #placa id="response" style="display: none;"></p>
+    </nb-card-body>
+</nb-card>

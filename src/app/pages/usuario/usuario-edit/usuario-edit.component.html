@@ -1,0 +1,62 @@
+<nb-card>
+    <nb-card-header>Editar usuário</nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputNome" class="label">Nome</label>
+                    <input type="text" nbInput fullWidth id="inputNome" placeholder="Nome" [(ngModel)]="editUsuario.nome">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputTelefone" class="label">Telefone</label>
+                    <input type="number" nbInput fullWidth id="inputTelefone" placeholder="Telefone" [(ngModel)]="editUsuario.telefone">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputIdentidade" class="label">Identidade</label>
+                    <input type="text" nbInput fullWidth id="inputIdentidade" placeholder="Identidade" [(ngModel)]="editUsuario.identidade">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputCPF" class="label">CPF</label>
+                    <input type="text" nbInput fullWidth id="inputCPF" placeholder="CPF" [(ngModel)]="editUsuario.cpf">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputEmail" class="label">E-mail</label>
+                    <input type="email" nbInput fullWidth id="inputEmail" placeholder="E-mail" [(ngModel)]="editUsuario.email">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputMatricula" class="label">Matrícula</label>
+                    <input type="text" nbInput fullWidth id="inputMatricula" placeholder="Matrícula" [(ngModel)]="editUsuario.matricula">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <nb-card-header>Selecione um tipo</nb-card-header>
+            <nb-card-body>
+                <nb-radio-group [(ngModel)]="editUsuario.tipo" name="tipo">
+                    <nb-radio value="Aluno">Aluno</nb-radio>
+                    <nb-radio value="Servidor">Servidor</nb-radio>
+                </nb-radio-group>
+            </nb-card-body>
+        </div>
+
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button (click)="cancelar()" nbButton outline status="danger">Cancelar</button>
+        <button (click)="edit()" type="submit" nbButton outline status="primary">Salvar</button>
+    </nb-card-footer>
+</nb-card>

@@ -1,0 +1,17 @@
+@import '../../../@theme/styles/themes';
+nb-icon {
+    font-size: 65px;
+}
+
+nb-card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    padding-top: nb-theme(card-header-with-select-padding-top);
+    padding-bottom: nb-theme(card-header-with-select-padding-bottom);
+}
+
+.titulo {
+    font-size: 35px;
+}

@@ -1,0 +1,11 @@
+<nb-card>
+    <nb-card-header>
+        <span>Entrada/Saida</span>
+        <button (click)="cadastrar()" nbButton outline status="primary">Registrar entrada</button>
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="entradaSaida" (edit)="editar($event)" (delete)="remove($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

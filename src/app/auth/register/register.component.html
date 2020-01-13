@@ -1,0 +1,39 @@
+<h1 id="title" class="title">Registrar</h1>
+
+<form aria-labelledby="title">
+
+    <div class="form-control-group">
+        <label class="label">Email:</label>
+        <input nbInput [(ngModel)]="login.email" name="email" pattern=".+@.+..+" placeholder="Endereço de Email" fullWidth>
+
+    </div>
+
+    <div class="form-control-group">
+        <label class="label">Senha:</label>
+        <input nbInput [(ngModel)]="login.senha" type="password" name="senha" placeholder="Senha" fullWidth>
+
+    </div>
+
+    <div class="form-control-group accept-group">
+        <nb-checkbox name="terms" [(ngModel)]="login.terms">
+            Aceite os <a href="#" target="_blank"><strong>Termos e Condições</strong></a>
+        </nb-checkbox>
+    </div>
+
+    <button nbButton fullWidth status="success" (click)="register()" [disabled]=" !login.terms || !login.email || !login.senha">
+        Registrar
+    </button>
+</form>
+
+<section class="links" aria-label="Social sign in">
+    Ou entre via:
+    <div class="socials">
+        <ng-container>
+
+        </ng-container>
+    </div>
+</section>
+
+<section class="another-action" aria-label="Sign in">
+    Já possui uma conta? <a class="text-link" routerLink="../login">Log in</a>
+</section>

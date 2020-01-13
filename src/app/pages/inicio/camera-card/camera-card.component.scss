@@ -1,0 +1,26 @@
+@import '../../../@theme/styles/themes';
+#video {
+    background-color: #000000;
+    inline-size: -webkit-fill-available;
+}
+
+#canvas {
+    display: none;
+}
+
+.icone {
+    vertical-align: text-bottom;
+}
+
+nb-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    padding-top: nb-theme(card-header-with-select-padding-top);
+    padding-bottom: nb-theme(card-header-with-select-padding-bottom);
+}
+
+.titulo {
+    padding-left: 0.5rem;
+}

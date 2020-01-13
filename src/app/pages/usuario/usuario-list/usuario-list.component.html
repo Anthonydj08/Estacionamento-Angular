@@ -1,0 +1,39 @@
+<!-- <button nbButton outline status="primary" (click)="cadastrar()" type="submit">Inserir usuario</button>
+<nb-card>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Identidade</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Tipo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.telefone}}</td>
+                <td>{{usuario.identidade}}</td>
+                <td>{{usuario.cpf}}</td>
+                <td>{{usuario.tipo}}</td>
+                <td>
+                    <button nbButton outline status="primary" (click)="editar(usuario)">Editar</button>
+                    <button nbButton outline status="danger">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</nb-card> -->
+
+<nb-card>
+    <nb-card-header>
+        Usuários
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="usuarios" (create)="cadastrar()" (edit)="editar($event)" (delete)="remove($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

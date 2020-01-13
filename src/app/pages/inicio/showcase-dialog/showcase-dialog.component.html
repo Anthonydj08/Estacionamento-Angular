@@ -1,0 +1,14 @@
+<nb-card>
+    <nb-card-header>
+        <span>Veículo não encontrado</span>
+    </nb-card-header>
+    <nb-card-body>
+
+        <span>Placa: {{data.plate}}</span>
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton hero status="primary" (click)="cadastrar()">Cadastrar veículo</button>
+        <button nbButton hero status="danger" (click)="dismiss()">Cancelar</button>
+    </nb-card-footer>
+</nb-card>

@@ -12,7 +12,6 @@ export class UsuarioInsertComponent implements OnInit {
 
   novoUsuario: Usuario;
   pessoas: Usuario[];
-  loading: boolean;
 
   constructor(private dbService: DbService, private toastrService: NbToastrService, protected ref: NbDialogRef<UsuarioInsertComponent>) { }
 

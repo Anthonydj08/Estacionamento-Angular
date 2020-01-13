@@ -3,6 +3,6 @@ export class EntradaESaida {
     codigo?: string;
     tipo: string;
     emailUsuario?: string;
-    entrada?: Date;
-    saida?: Date;
+    entrada?: string;
+    saida?: string;
 }

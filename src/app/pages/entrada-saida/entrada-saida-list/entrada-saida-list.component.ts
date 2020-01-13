@@ -22,7 +22,7 @@ export class EntradaSaidaListComponent implements OnInit {
   }
 
   private async loadEntradasEsaidas() {
-    await this.dbService.listWithUIDs<EntradaESaida>('/entradaESaida')
+    await this.dbService.listWithUIDs<EntradaESaida>('/entradaesaida')
       .then(entradaESaidas => {
         this.entradaESaidas = entradaESaidas;
       }).catch(error => {

@@ -1,3 +1,55 @@
-<p>
-  entrada-saida-entrada works!
-</p>
+<nb-card>
+    <nb-card-header>Inserir entrada</nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputPlaca" class="label">Placa</label>
+                    <input type="text" nbInput fullWidth id="inputPlaca" placeholder="Placa" [(ngModel)]="novaEntrada.placa">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputCodigo" class="label">Código</label>
+                    <input type="number" nbInput fullWidth id="inputCodigo" placeholder="Código" [(ngModel)]="novaEntrada.codigo">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputTipo" class="label">Tipo</label>
+                    <input type="text" nbInput fullWidth id="inputTipo" placeholder="Tipo" [(ngModel)]="novaEntrada.tipo">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputEmail" class="label">E-mail</label>
+                    <input type="email" nbInput fullWidth id="inputEmail" placeholder="E-mail" [(ngModel)]="novaEntrada.emailUsuario">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputEntrada" class="label">Entrada</label>
+                    <input nbInput placeholder="Data" [nbDatepicker]="entrada" [(ngModel)]="novaEntrada.entrada">
+                    <nb-datepicker #entrada format="dd/MM/yyyy"></nb-datepicker>
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputSaida" class="label">Saída</label>
+                    <input nbInput placeholder="" [nbDatepicker]="saida" [(ngModel)]="novaEntrada.saida">
+                    <nb-datepicker #saida format="dd/MM/yyyy"></nb-datepicker>
+                </div>
+            </div>
+        </div> -->
+
+    </nb-card-body>
+    <nb-card-footer>
+        <button (click)="cancelar()" nbButton outline status="danger">Cancelar</button>
+        <button (click)="insert()" type="submit" nbButton outline status="primary">Cadastrar</button>
+    </nb-card-footer>
+</nb-card>

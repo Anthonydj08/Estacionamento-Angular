@@ -14,6 +14,7 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  
 } from '@nebular/theme';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -46,7 +47,8 @@ import { NgxAuthModule } from './auth/auth.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     PagesModule,
-    NgxAuthModule
+    NgxAuthModule,
+    
   ],
   bootstrap: [AppComponent],
 })

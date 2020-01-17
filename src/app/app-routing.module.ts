@@ -2,6 +2,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@core/guards/auth.guard';
 import { LoginGuard } from './@core/guards/login.guard';
+import { EntradaSaidaModule } from './pages/entrada-saida/entrada-saida.module';
 const routes: Routes = [
   {
     path: 'pages',
@@ -59,6 +60,7 @@ const config: ExtraOptions = {
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
+
 })
 export class AppRoutingModule {
 }

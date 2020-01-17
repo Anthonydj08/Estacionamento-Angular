@@ -14,11 +14,18 @@ export class VeiculoInsertComponent implements OnInit {
   novoVeiculo: Veiculo;
   veiculo: Veiculo[];
   loading: boolean;
+  data: any;
 
   constructor(private dbService: DbService, private toastrService: NbToastrService, protected ref: NbDialogRef<VeiculoInsertComponent>) { }
 
   ngOnInit() {
     this.novoVeiculo = new Veiculo();
+    console.log("asdasdasd", this.data);
+    if(this.data){
+      this.novoVeiculo.placa = this.data.plate;
+      this.novoVeiculo.fabricante = this.data.vehicle.make[0].name;
+      this.novoVeiculo.tipo = this.data.vehicle.body_type[0].name;
+    }
   }
 
   insert() {

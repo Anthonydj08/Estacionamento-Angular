@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../showcase-dialog/showcase-dialog.component';
+import { Veiculo } from '../../../@core/model/veiculo';
+import { EntradaSaidaEntradaComponent } from '../../entrada-saida/entrada-saida-entrada/entrada-saida-entrada.component';
+import { DbService } from '../../../@core/services/db.service';
 declare const leitura: any;
 
 @Component({
@@ -25,13 +28,15 @@ export class CameraCardComponent implements OnInit {
   public fotoConvertida: any;
 
   public result: any;
-  public veiculo:any
+  public veiculo: any
+
+  public veiculos: Veiculo[];
 
 
-  constructor(private dialogService: NbDialogService, public http: HttpClient) {
+  constructor(private dialogService: NbDialogService, public http: HttpClient, private dbService: DbService, private toastrService: NbToastrService,) {
     this.captures = [];
   }
-  
+
   open(mensagem) {
     this.dialogService.open(ShowcaseDialogComponent, {
       context: {
@@ -66,12 +71,42 @@ export class CameraCardComponent implements OnInit {
       } else {
         this.result = this.placa.nativeElement.textContent
         this.veiculo = JSON.parse(this.result);
-
-        this.open(this.veiculo.results[0])
+        this.verificarPlaca();
       }
-      //console.log(leitura(this.fotoConvertida));
 
     }, 3000);
-}
+  }
+
+  private async verificarPlaca() {
+    await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
+      .then(veiculos => {
+        this.veiculos = veiculos;
+         if (veiculos.length == 0) {
+          this.open(this.veiculo.results[0])
+          console.log("não achou ir para tela de cadastrar veiculo");
+        } else {
+          console.log("achou IR PARA TELA DE REGISTRAR ENTRADA VEICULO");
+          this.showToast("Veículo encontrado!", "success");
+          this.irParaEntrada(veiculos[0]);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+  }
+
+  private async irParaEntrada(veiculo) {
+    this.dialogService.open(EntradaSaidaEntradaComponent,{
+      context: {
+        data: veiculo,
+      },
+    })
+  }
+
+  showToast(mensagem, status) {
+    this.toastrService.show(
+      status || "Success",
+      mensagem,
+      { status  });
+  }
 
 }

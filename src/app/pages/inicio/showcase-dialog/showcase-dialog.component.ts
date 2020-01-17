@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NbDialogRef } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { DbService } from '../../../@core/services/db.service';
 import { Veiculo } from '../../../@core/model/veiculo';
+import { Router } from '@angular/router';
+import { VeiculoInsertComponent } from '../../veiculo/veiculo-insert/veiculo-insert.component';
 
 @Component({
   selector: 'ngx-showcase-dialog',
@@ -15,24 +17,10 @@ export class ShowcaseDialogComponent implements OnInit {
   public veiculos: Veiculo[];
 
 
-  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>, private dbService: DbService,) { }
+  constructor(protected ref: NbDialogRef<ShowcaseDialogComponent>,private dialogService: NbDialogService,) { }
 
   async ngOnInit() {
-    await this.verificarPlaca();
-  }
-
-  private async verificarPlaca() {
-    await this.dbService.search<Veiculo>('/veiculo', 'placa', this.data.plate)
-      .then(veiculos => {
-        this.veiculos = veiculos;
-        if(veiculos.length == 0){
-          console.log("não achou ir para tela de cadastrar veiculo");
-        } else{
-          console.log("achou IR PARA TELA DE REGISTRAR ENTRADA VEICULO");
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+    
   }
 
   dismiss() {
@@ -40,7 +28,16 @@ export class ShowcaseDialogComponent implements OnInit {
   }
 
   cadastrar() {
+    this.irParaCadastro();
     console.log("ir para tela de cadastrar veiculo passando placa");
-
   }
+
+  private async irParaCadastro() {
+    this.dialogService.open(VeiculoInsertComponent,{
+      context: {
+        data: this.data,
+      },
+    })
+  }
+  
 }

@@ -9,6 +9,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbUserModule,
+  NbDialogRef,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -19,6 +20,7 @@ import { EntradaSaidaComponent } from './entrada-saida.component';
 import { EntradaSaidaEntradaComponent } from './entrada-saida-entrada/entrada-saida-entrada.component';
 import { EntradaSaidaSaidaComponent } from './entrada-saida-saida/entrada-saida-saida.component';
 import { EntradaSaidaListComponent } from './entrada-saida-list/entrada-saida-list.component';
+import { EntradaSaidaMostrarComponent } from './entrada-saida-mostrar/entrada-saida-mostrar.component';
 
 @NgModule({
   imports: [
@@ -35,13 +37,15 @@ import { EntradaSaidaListComponent } from './entrada-saida-list/entrada-saida-li
     NbSelectModule,
     NbIconModule,
     ngFormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
   ],
   declarations: [
     EntradaSaidaComponent,
     EntradaSaidaListComponent,
     EntradaSaidaEntradaComponent,
     EntradaSaidaSaidaComponent,
+    EntradaSaidaMostrarComponent,
   ],
+  
 })
 export class EntradaSaidaModule { }

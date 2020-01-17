@@ -27,8 +27,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/veiculo/list',
   },
   {
-    title: 'Financeiro',
+    title: 'Relatórios',
     icon: 'pie-chart-outline',
+    link: '',
+  },
+  {
+    title: 'Configurações',
+    icon: 'settings-outline',
     link: '',
   },
   {

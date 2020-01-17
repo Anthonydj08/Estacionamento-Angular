@@ -13,8 +13,7 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbWindowModule,
-  
+  NbWindowModule,  
 } from '@nebular/theme';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -48,7 +47,6 @@ import { NgxAuthModule } from './auth/auth.module';
     AngularFireDatabaseModule,
     PagesModule,
     NgxAuthModule,
-    
   ],
   bootstrap: [AppComponent],
 })

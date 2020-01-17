@@ -38,8 +38,8 @@ export class EntradaSaidaListComponent implements OnInit {
   //   });
   // }
 
-  cadastrar(){
-    this.dialogService.open(EntradaSaidaEntradaComponent)    
+  cadastrar() {
+    this.dialogService.open(EntradaSaidaEntradaComponent)
   }
 
   // remove(usuario) {
@@ -57,12 +57,16 @@ export class EntradaSaidaListComponent implements OnInit {
       { status });
   }
 
+  teste(event) {
+    console.log(event.data);
+    this.router.navigate(['/pages/entrada-saida/mostrar'], { queryParams: { value: JSON.stringify(event.data) } });
+  }
 
   settings = {
-    mode:"external",
+    mode: "external",
     actions: {
       columnTitle: "",
-      add:false,
+      add: false,
     },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -105,7 +109,7 @@ export class EntradaSaidaListComponent implements OnInit {
         type: 'string',
       },
     },
-   
+
 
   };
 }

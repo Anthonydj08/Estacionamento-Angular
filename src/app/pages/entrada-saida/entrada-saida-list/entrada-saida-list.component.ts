@@ -57,9 +57,21 @@ export class EntradaSaidaListComponent implements OnInit {
       { status });
   }
 
-  teste(event) {
+  selecionado(event) {
     console.log(event.data);
     this.router.navigate(['/pages/entrada-saida/mostrar'], { queryParams: { value: JSON.stringify(event.data) } });
+  }
+  editar(event){
+    this.selecionado(event);
+  }
+  remove(event){
+    console.log(event);
+    
+    this.dbService.remove('/entradaesaida', event.data.uid)
+    .then(() => {
+      this.showToast('Entrada/Saida removida', 'warning');
+      this.loadEntradasEsaidas();
+    })
   }
 
   settings = {

@@ -5,7 +5,7 @@
     </nb-card-header>
 
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="entradaESaidas" (edit)="editar($event)" (delete)="remove($event)" (userRowSelect)="teste($event)">
+        <ng2-smart-table [settings]="settings" [source]="entradaESaidas" (edit)="editar($event)" (delete)="remove($event)" (userRowSelect)="selecionado($event)">
         </ng2-smart-table>
     </nb-card-body>
 </nb-card>

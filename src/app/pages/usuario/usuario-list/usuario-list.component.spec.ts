@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsuarioListComponent } from './usuario-list.component';
+import { AppComponent } from '../../../app.component';
 
 describe('UsuarioListComponent', () => {
   let component: UsuarioListComponent;
@@ -8,9 +9,9 @@ describe('UsuarioListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsuarioListComponent ]
+      declarations: [UsuarioListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,4 +23,5 @@ describe('UsuarioListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

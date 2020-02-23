@@ -5,6 +5,10 @@ import { ShowcaseDialogComponent } from '../showcase-dialog/showcase-dialog.comp
 import { Veiculo } from '../../../@core/model/veiculo';
 import { EntradaSaidaEntradaComponent } from '../../entrada-saida/entrada-saida-entrada/entrada-saida-entrada.component';
 import { DbService } from '../../../@core/services/db.service';
+
+import * as cocoSSD from '@tensorflow-models/coco-ssd';
+
+
 declare const leitura: any;
 
 @Component({
@@ -13,6 +17,8 @@ declare const leitura: any;
   styleUrls: ['./camera-card.component.scss']
 })
 export class CameraCardComponent implements OnInit {
+
+  private videoTensor: HTMLVideoElement;
 
   @ViewChild("video", { static: false })
   public video: ElementRef;
@@ -26,15 +32,15 @@ export class CameraCardComponent implements OnInit {
   public captures: Array<any>;
   public fotoBase64: any;
   public fotoConvertida: any;
-
   public result: any;
-  public veiculo: any
-
+  public veiculo: any;
+  public executado: boolean;
   public veiculos: Veiculo[];
 
 
-  constructor(private dialogService: NbDialogService, public http: HttpClient, private dbService: DbService, private toastrService: NbToastrService,) {
+  constructor(private dialogService: NbDialogService, public http: HttpClient, private dbService: DbService, private toastrService: NbToastrService) {
     this.captures = [];
+    this.executado = false
   }
 
   open(mensagem) {
@@ -47,19 +53,27 @@ export class CameraCardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.webcam_init();
+
+    let self = this
+    this.videoTensor.onloadeddata = function () {
+      self.predictWithCocoModel();
+    };
+
   }
 
-  public ngAfterViewInit() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-        this.video.nativeElement.srcObject = stream;
-        this.video.nativeElement.play();
-      });
-    }
-  }
+  // public ngAfterViewInit() {
+  //   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  //     navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+  //       this.video.nativeElement.srcObject = stream;
+  //       this.video.nativeElement.play();
+  //     });
+  //   }
+  // }
+
 
   public capture() {
-    var context = this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 540, 480);
+    //var context = this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 540, 480);
     this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
     this.fotoBase64 = this.canvas.nativeElement.toDataURL("image/png");
     this.fotoConvertida = this.fotoBase64.substring(this.fotoBase64.indexOf(",") + 1)
@@ -81,7 +95,7 @@ export class CameraCardComponent implements OnInit {
     await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
       .then(veiculos => {
         this.veiculos = veiculos;
-         if (veiculos.length == 0) {
+        if (veiculos.length == 0) {
           this.open(this.veiculo.results[0])
           console.log("não achou ir para tela de cadastrar veiculo");
         } else {
@@ -95,7 +109,8 @@ export class CameraCardComponent implements OnInit {
   }
 
   private async irParaEntrada(veiculo) {
-    this.dialogService.open(EntradaSaidaEntradaComponent,{
+    this.executado = false
+    this.dialogService.open(EntradaSaidaEntradaComponent, {
       context: {
         data: veiculo,
       },
@@ -106,7 +121,94 @@ export class CameraCardComponent implements OnInit {
     this.toastrService.show(
       status || "Success",
       mensagem,
-      { status  });
+      { status });
   }
+
+
+  public async predictWithCocoModel() {
+    const model = await cocoSSD.load();
+    this.detectFrame(this.videoTensor, model);
+    console.log('model loaded');
+  }
+
+
+  webcam_init() {
+    this.videoTensor = <HTMLVideoElement>document.getElementById("vid");
+
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: false,
+        video: {
+          facingMode: "user",
+        }
+      })
+      .then(stream => {
+        this.videoTensor.srcObject = stream;
+        this.videoTensor.onloadedmetadata = () => {
+          this.videoTensor.play();
+        };
+      });
+  }
+
+  detectFrame = (videoTensor, model) => {
+    model.detect(videoTensor).then(predictions => {
+      this.renderPredictions(predictions);
+      requestAnimationFrame(() => {
+        this.detectFrame(videoTensor, model);
+      });
+    });
+  }
+
+  renderPredictions = predictions => {
+    const canvas = <HTMLCanvasElement>document.getElementById("canvas");
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = 540;
+    canvas.height = 480;
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    // Font options.
+    const font = "16px sans-serif";
+    ctx.font = font;
+    ctx.textBaseline = "top";
+    ctx.drawImage(this.videoTensor, 0, 0, 540, 480);
+
+    predictions.forEach(prediction => {
+      const x = prediction.bbox[0];
+      const y = prediction.bbox[1];
+      const width = prediction.bbox[2];
+      const height = prediction.bbox[3];
+      // Draw the bounding box.
+      ctx.strokeStyle = "#00FFFF";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, width, height);
+      // Draw the label background.
+      ctx.fillStyle = "#00FFFF";
+      const textWidth = ctx.measureText(prediction.class).width;
+      const textHeight = parseInt(font, 10); // base 10
+      ctx.fillRect(x, y, textWidth + 4, textHeight + 4);
+
+
+      if (prediction.class == "car" && this.executado == false) {
+        console.log("é um carro");
+        this.executado = true
+        setTimeout(() => {
+          this.capture();
+        }, 2000);
+      }
+
+
+    });
+
+    predictions.forEach(prediction => {
+      const x = prediction.bbox[0];
+      const y = prediction.bbox[1];
+      // Draw the text last to ensure it's on top.
+      ctx.fillStyle = "#000000";
+      ctx.fillText(prediction.class, x, y);
+    });
+  };
+
 
 }

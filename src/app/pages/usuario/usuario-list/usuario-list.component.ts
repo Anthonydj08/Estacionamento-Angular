@@ -12,7 +12,7 @@ import { UsuarioInsertComponent } from '../usuario-insert/usuario-insert.compone
   styleUrls: ['./usuario-list.component.scss']
 })
 export class UsuarioListComponent implements OnInit {
-
+  title = "testando 123"
   usuarios: Usuario[];
 
   constructor(private dbService: DbService, public router: Router, private toastrService: NbToastrService, private dialogService: NbDialogService) {

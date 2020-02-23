@@ -29,7 +29,7 @@
 
 function leitura(foto64) {
     var secret_key = "sk_fde22bcc8fe54ef476718757";
-    var url = "https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=us&secret_key=" + secret_key;
+    var url = "https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=br&secret_key=" + secret_key;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
     var placa = ""

@@ -10,6 +10,7 @@ import {
   NbSelectModule,
   NbUserModule,
   NbDialogRef,
+  NbCardHeaderComponent,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -38,6 +39,7 @@ import { EntradaSaidaMostrarComponent } from './entrada-saida-mostrar/entrada-sa
     NbIconModule,
     ngFormsModule,
     Ng2SmartTableModule,
+    
   ],
   declarations: [
     EntradaSaidaComponent,

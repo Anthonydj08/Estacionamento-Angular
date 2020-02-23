@@ -13,14 +13,16 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbWindowModule,  
+  NbWindowModule,
+  NbCardModule,  
 } from '@nebular/theme';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { PagesModule } from './pages/pages.module';
 import { NgxAuthModule } from './auth/auth.module';
-
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +49,7 @@ import { NgxAuthModule } from './auth/auth.module';
     AngularFireDatabaseModule,
     PagesModule,
     NgxAuthModule,
+    AngularFireAuthModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -92,20 +92,26 @@ export class CameraCardComponent implements OnInit {
   }
 
   private async verificarPlaca() {
-    await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
-      .then(veiculos => {
-        this.veiculos = veiculos;
-        if (veiculos.length == 0) {
-          this.open(this.veiculo.results[0])
-          console.log("não achou ir para tela de cadastrar veiculo");
-        } else {
-          console.log("achou IR PARA TELA DE REGISTRAR ENTRADA VEICULO");
-          this.showToast("Veículo encontrado!", "success");
-          this.irParaEntrada(veiculos[0]);
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+    if (this.veiculo.results.length != 0) {
+      await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
+        .then(veiculos => {
+          this.veiculos = veiculos;
+          if (veiculos.length == 0) {
+            this.open(this.veiculo.results[0])
+            console.log("não achou ir para tela de cadastrar veiculo");
+          } else {
+            console.log("achou IR PARA TELA DE REGISTRAR ENTRADA VEICULO");
+            this.showToast("Veículo encontrado!", "success");
+            this.irParaEntrada(veiculos[0]);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.showToast("Placa não identificada", "warning");
+      console.log("ALPR não achou a placa");
+    }
+
   }
 
   private async irParaEntrada(veiculo) {

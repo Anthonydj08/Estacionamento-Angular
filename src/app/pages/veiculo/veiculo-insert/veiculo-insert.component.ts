@@ -23,6 +23,7 @@ export class VeiculoInsertComponent implements OnInit {
     console.log("asdasdasd", this.data);
     if(this.data){
       this.novoVeiculo.placa = this.data.plate;
+      this.novoVeiculo.modelo = this.data.vehicle.make_model[0].name;
       this.novoVeiculo.fabricante = this.data.vehicle.make[0].name;
       this.novoVeiculo.tipo = this.data.vehicle.body_type[0].name;
     }

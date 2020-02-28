@@ -22,7 +22,7 @@ export class EntradaSaidaEntradaComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("dataaaaaa", this.data);
+    console.log(this.data);
     this.novaEntrada = new EntradaESaida();
     if (this.data) {
       this.novaEntrada = this.data

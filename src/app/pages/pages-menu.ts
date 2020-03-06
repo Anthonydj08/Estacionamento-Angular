@@ -34,7 +34,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Configurações',
     icon: 'settings-outline',
-    link: '',
+    link: '/pages/configuracoes',
   },
   {
     title: 'FEATURES',

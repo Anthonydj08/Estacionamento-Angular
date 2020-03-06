@@ -9,6 +9,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { VeiculoModule } from './veiculo/veiculo.module';
 import { EntradaSaidaModule } from './entrada-saida/entrada-saida.module';
+import { ConfiguracoesComponent } from './configuracoes/pages/configuracoes/configuracoes.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { EntradaSaidaModule } from './entrada-saida/entrada-saida.module';
     EntradaSaidaModule,
   ],
   declarations: [
-    PagesComponent,   
+    PagesComponent,
+    ConfiguracoesComponent,   
   ],
 })
 export class PagesModule {

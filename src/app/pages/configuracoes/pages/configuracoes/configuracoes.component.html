@@ -4,8 +4,8 @@
             <nb-card-header>Vagas</nb-card-header>
             <nb-card-body>
                 <form class="form-inline">
-                    <input type="text" nbInput fullWidth placeholder="Quantidade de vagas">
-                    <button type="submit" nbButton status="primary">Salvar</button>
+                    <input type="text" nbInput placeholder="Quantidade de vagas" [(ngModel)]="novoNumVagas.vagas" name="vagas">
+                    <button (click)="insert()" type="submit" nbButton status="primary">Salvar</button>
                 </form>
             </nb-card-body>
         </nb-card>

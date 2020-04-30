@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbCardModule } from '@nebular/theme';
+import { NbMenuModule, NbCardModule, NbInputModule, NbButtonModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -10,12 +10,16 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { VeiculoModule } from './veiculo/veiculo.module';
 import { EntradaSaidaModule } from './entrada-saida/entrada-saida.module';
 import { ConfiguracoesComponent } from './configuracoes/pages/configuracoes/configuracoes.component';
-
+import { FormsModule as ngFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
+    NbCardModule,
+    NbInputModule,
+    NbButtonModule,
+    ngFormsModule,
     InicioModule,
     MiscellaneousModule,
     NbCardModule,

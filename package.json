@@ -64,6 +64,8 @@
         "intl": "1.2.5",
         "ionicons": "2.0.1",
         "jquery": "^3.4.1",
+        "jspdf": "^1.5.3",
+        "jspdf-autotable": "^3.5.3",
         "leaflet": "1.2.0",
         "nebular-icons": "1.1.0",
         "ng2-ckeditor": "^1.2.2",

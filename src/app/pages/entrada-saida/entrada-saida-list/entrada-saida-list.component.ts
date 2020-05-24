@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { EntradaSaidaEntradaComponent } from '../entrada-saida-entrada/entrada-saida-entrada.component';
 
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+
 @Component({
   selector: 'ngx-entrada-saida-list',
   templateUrl: './entrada-saida-list.component.html',
@@ -124,4 +127,19 @@ export class EntradaSaidaListComponent implements OnInit {
 
 
   };
+
+
+  downloadPDF() {
+    const doc = new jsPDF()
+ 
+    doc.autoTable({
+      head: [['Name', 'Email', 'Country']],
+      body: [
+        ['David', 'david@example.com', 'Sweden'],
+        ['Castille', 'castille@example.com', 'Spain'],
+      ],
+    })
+   
+    doc.save('table.pdf')
+  }
 }

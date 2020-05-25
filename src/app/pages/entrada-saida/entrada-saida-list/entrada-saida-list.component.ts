@@ -16,7 +16,7 @@ import 'jspdf-autotable'
 export class EntradaSaidaListComponent implements OnInit {
 
   entradaESaidas: EntradaESaida[];
-
+  dados: any;
   constructor(private dbService: DbService, public router: Router, private toastrService: NbToastrService, private dialogService: NbDialogService) {
 
   }
@@ -31,7 +31,29 @@ export class EntradaSaidaListComponent implements OnInit {
       }).catch(error => {
         console.log(error);
       });
+      this.gerarRelatorio()
   }
+
+  gerarRelatorio() {
+    this.dados = []
+    for (var i = 0; i <= this.entradaESaidas.length; i++) {
+      this.dados.push({
+        id: i,
+        placa: this.entradaESaidas[i].placa,
+        tipo: this.entradaESaidas[i].tipo,
+        email: this.entradaESaidas[i].emailUsuario,
+        entrada: this.entradaESaidas[i].entrada,
+        saida: this.entradaESaidas[i].saida,
+      })
+    }    
+  }
+
+  headRows() {
+    return [
+      { id: 'ID', placa: 'Placa', tipo: 'Tipo', email: 'E-mail', entrada: 'Entrada', saida: "Saída" },
+    ]
+  }
+  
 
   // editar(usuario) {
   //   this.dialogService.open(EntradaSaidaSaidaComponent, {
@@ -64,17 +86,17 @@ export class EntradaSaidaListComponent implements OnInit {
     console.log(event.data);
     this.router.navigate(['/pages/entrada-saida/mostrar'], { queryParams: { value: JSON.stringify(event.data) } });
   }
-  editar(event){
+  editar(event) {
     this.selecionado(event);
   }
-  remove(event){
+  remove(event) {
     console.log(event);
-    
+
     this.dbService.remove('/entradaesaida', event.data.uid)
-    .then(() => {
-      this.showToast('Entrada/Saida removida', 'warning');
-      this.loadEntradasEsaidas();
-    })
+      .then(() => {
+        this.showToast('Entrada/Saida removida', 'warning');
+        this.loadEntradasEsaidas();
+      })
   }
 
   settings = {
@@ -128,18 +150,12 @@ export class EntradaSaidaListComponent implements OnInit {
 
   };
 
-
   downloadPDF() {
     const doc = new jsPDF()
- 
     doc.autoTable({
-      head: [['Name', 'Email', 'Country']],
-      body: [
-        ['David', 'david@example.com', 'Sweden'],
-        ['Castille', 'castille@example.com', 'Spain'],
-      ],
+      head: this.headRows(),
+      body: this.dados,
     })
-   
     doc.save('table.pdf')
   }
 }

@@ -145,7 +145,7 @@ export class CameraCardComponent implements OnInit {
       .getUserMedia({
         audio: false,
         video: {
-          facingMode: "user",
+          facingMode: "environment",
         }
       })
       .then(stream => {

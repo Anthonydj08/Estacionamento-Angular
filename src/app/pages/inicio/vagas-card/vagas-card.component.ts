@@ -43,7 +43,7 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
   private async atualizar() {
     await this.load()
       .then(num => {
-        this.disponiveis = this.numVagas[0].vagas
+        
         this.ocupadas = 0
         console.log(this.entradaESaidas);
         for (let i = 0; i < this.entradaESaidas.length; i++) {
@@ -51,13 +51,13 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
             this.ocupadas++
           }
         }
+        this.disponiveis = parseInt(this.numVagas[0].vagas) - this.ocupadas
       })
   }
 
   async ngAfterViewInit() {
     await this.atualizar()
       .then(num => {
-
 
         this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 

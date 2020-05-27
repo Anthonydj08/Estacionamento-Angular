@@ -59,6 +59,7 @@ import { CameraCardComponent } from './camera-card/camera-card.component';
 import { ShowcaseDialogComponent } from './showcase-dialog/showcase-dialog.component';
 import { VagasCardComponent } from './vagas-card/vagas-card.component';
 import { UsuariosCardComponent } from './usuarios-card/usuarios-card.component';
+import { VeiculosCardComponent } from './veiculos-card/veiculos-card.component';
 
 @NgModule({
   imports: [
@@ -113,6 +114,7 @@ import { UsuariosCardComponent } from './usuarios-card/usuarios-card.component';
     ShowcaseDialogComponent,
     VagasCardComponent,
     UsuariosCardComponent,
+    VeiculosCardComponent,
   ],
   providers: [
     CountryOrdersMapService,

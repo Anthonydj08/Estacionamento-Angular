@@ -1,31 +1,3 @@
-// function teste() {
-//     alert("teste")
-// }
-
-// $(function () {
-//     const fetch = require('node-fetch');
-//     const FormData = require('form-data');
-//     const fs = require('fs');
-
-//     let image_path = '../assets/images/placa.jpg'
-//     let body = new FormData();
-//     body.append('upload', fs.createReadStream(image_path));
-
-//     fetch("https://api.platerecognizer.com/v1/plate-reader/", {
-//         method: 'POST',
-//         headers: {
-//             "Authorization": "Token 321be1e11119bc11eb38a56bef273ebff58599ba"
-//         },
-//         body: body
-//     }).then(res => res.json())
-//         .then(json => console.log("testeeeee", json))
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// })
-// console.log("tefasdvfgdsdgsdsf");
-
-// Open connection to api.openalpr.com
 
 function leitura(foto64) {
     var secret_key = "sk_fde22bcc8fe54ef476718757";

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { DbService } from '../../../@core/services/db.service';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { Veiculo } from '../../../@core/model/veiculo';
-
 @Component({
   selector: 'ngx-veiculo-list',
   templateUrl: './veiculo-list.component.html',

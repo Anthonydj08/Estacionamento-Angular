@@ -12,16 +12,16 @@ export class NgxLoginComponent implements OnInit {
 
   public login: Login = {};
 
-  constructor(private auth: AuthService,private toastrService: NbToastrService, public router: Router) {
-    this.login = new Login(); 
+  constructor(private auth: AuthService, private toastrService: NbToastrService, public router: Router) {
+    this.login = new Login();
   }
 
   ngOnInit() {
-   
+
   }
 
   async loginEmail() {
-    
+
     try {
       await this.auth.login(this.login);
       this.router.navigate(['/inicio']);
@@ -35,15 +35,17 @@ export class NgxLoginComponent implements OnInit {
           message = 'E-mail inválido.';
           break;
         case 'auth/wrong-password':
-          message = 'Senha inválida.'
+          message = 'Senha inválida.';
+        case 'auth/user-not-found':
+          message = 'Usuário não encontrado';
       }
-      this.showToast(message,"danger");
+      this.showToast(message, "danger");
       console.log(error);
     } finally {
-  
+
       //
     }
-  } 
+  }
   showToast(mensagem, status) {
     this.toastrService.show(
       status || 'Success',

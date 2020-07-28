@@ -21,7 +21,7 @@
         <a class="forgot-password" routerLink="../request-password">Esqueceu a senha?</a>
     </div>
 
-    <button nbButton fullWidth status="success" [disabled]="!login.email || !login.senha" (click)="loginEmail()">
+    <button nbButton fullWidth status="success" type="submit" [disabled]="!login.email || !login.senha" (click)="loginEmail()">
     LogIn
   </button>
 </form>

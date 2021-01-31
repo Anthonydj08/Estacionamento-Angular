@@ -23,9 +23,22 @@ export class VeiculoInsertComponent implements OnInit {
     console.log("asdasdasd", this.data);
     if(this.data){
       this.novoVeiculo.placa = this.data.plate;
-      this.novoVeiculo.modelo = this.data.vehicle.make_model[0].name;
-      this.novoVeiculo.fabricante = this.data.vehicle.make[0].name;
-      this.novoVeiculo.tipo = this.data.vehicle.body_type[0].name;
+      this.novoVeiculo.modelo = this.data.vehicle.make_model[0].name[0].toUpperCase() + this.data.vehicle.make_model[0].name.substr(1).toLowerCase();
+      this.novoVeiculo.fabricante = this.data.vehicle.make[0].name[0].toUpperCase() + this.data.vehicle.make[0].name.substr(1).toLowerCase();
+      this.novoVeiculo.tipo = this.data.vehicle.body_type[0].name[0].toUpperCase() + this.data.vehicle.body_type[0].name.substr(1).toLowerCase();
+    }
+    document.getElementById("inputModelo").addEventListener("keyup", this.forceFirstInputUppercase, false);
+    document.getElementById("inputCor").addEventListener("keyup", this.forceFirstInputUppercase, false);
+    document.getElementById("inputFabricante").addEventListener("keyup", this.forceFirstInputUppercase, false);
+    document.getElementById("inputTipo").addEventListener("keyup", this.forceFirstInputUppercase, false);
+  }
+
+  forceFirstInputUppercase(e)
+  {
+    let start = e.target.selectionStart;
+    if(start == 1) {
+      // uppercase first letter
+      e.target.value = e.target.value.toUpperCase();
     }
   }
 

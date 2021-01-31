@@ -32,6 +32,17 @@ export class EntradaSaidaEntradaComponent implements OnInit {
     this.entrada = new Date(this.novaEntrada.entrada).toLocaleString();
     console.log(this.novaEntrada.entrada);
 
+    document.getElementById("inputTipo").addEventListener("keyup", this.forceFirstInputUppercase, false);
+  }
+
+  
+  forceFirstInputUppercase(e)
+  {
+    let start = e.target.selectionStart;
+    if(start == 1) {
+      // uppercase first letter
+      e.target.value = e.target.value.toUpperCase();
+    }
   }
 
   insert() {

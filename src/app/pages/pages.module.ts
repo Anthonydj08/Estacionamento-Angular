@@ -1,3 +1,4 @@
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
 import { NbMenuModule, NbCardModule, NbInputModule, NbButtonModule } from '@nebular/theme';
 
@@ -11,6 +12,7 @@ import { VeiculoModule } from './veiculo/veiculo.module';
 import { EntradaSaidaModule } from './entrada-saida/entrada-saida.module';
 import { ConfiguracoesComponent } from './configuracoes/pages/configuracoes/configuracoes.component';
 import { FormsModule as ngFormsModule } from '@angular/forms';
+import { RelatoriosComponent } from './relatorios/relatorios.component';
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -26,10 +28,12 @@ import { FormsModule as ngFormsModule } from '@angular/forms';
     UsuarioModule,
     VeiculoModule,
     EntradaSaidaModule,
+    Ng2SmartTableModule,
   ],
   declarations: [
     PagesComponent,
-    ConfiguracoesComponent,   
+    ConfiguracoesComponent,
+    RelatoriosComponent,   
   ],
 })
 export class PagesModule {

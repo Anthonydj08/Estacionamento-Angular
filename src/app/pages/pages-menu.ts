@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Relatórios',
     icon: 'pie-chart-outline',
-    link: '',
+    link: '/pages/relatorios',
   },
   {
     title: 'Configurações',

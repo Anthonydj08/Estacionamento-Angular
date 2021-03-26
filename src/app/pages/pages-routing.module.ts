@@ -5,6 +5,8 @@ import { PagesComponent } from './pages.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ConfiguracoesComponent } from './configuracoes/pages/configuracoes/configuracoes.component';
+import { RelatoriosComponent } from './relatorios/relatorios.component';
+
 
 const routes: Routes = [{
   path: '',
@@ -33,6 +35,10 @@ const routes: Routes = [{
       path: 'auth',
       loadChildren: () => import('../auth/auth.module')
         .then(m => m.NgxAuthModule),
+    },
+    {
+      path: 'relatorios',
+      component: RelatoriosComponent,
     },
     {
       path: 'configuracoes',

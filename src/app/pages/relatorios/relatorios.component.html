@@ -1,0 +1,12 @@
+<nb-card>
+  <nb-card-header>
+    <span>Relatórios</span>
+  </nb-card-header>
+
+  <nb-card-body>
+    <input #search class="search" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+    <ng2-smart-table [settings]="settings" [source]="entradasESaidas" id="contentToConvert">
+    </ng2-smart-table>
+  </nb-card-body>
+  <button (click)="downloadPDF()" nbButton outline status="primary">Download PDF</button>
+</nb-card>

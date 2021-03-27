@@ -33,8 +33,8 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="inputEntrada" class="label">Entrada</label>
-                    <input nbInput placeholder="Data" [nbDatepicker]="entrada" [(ngModel)]="novaEntrada.entrada">
-                    <nb-datepicker #entrada format="dd/MM/yyyy HH:mm:ss"></nb-datepicker>
+                    <!-- <input nbInput placeholder="Data" [nbDatepicker]="entrada" [(ngModel)]="novaEntrada.entrada">
+                    <nb-datepicker #entrada format="dd/MM/yyyy HH:mm:ss"></nb-datepicker> -->
 
                 </div>
             </div>
@@ -42,7 +42,7 @@
 
     </nb-card-body>
     <nb-card-footer>
-        <button (click)="cancelar()" nbButton outline status="danger">Cancelar</button>
+        <button id="CancelButton" (click)="cancelar()" nbButton outline status="danger">Cancelar</button>
         <button (click)="insert()" type="submit" nbButton outline status="primary">Cadastrar</button>
     </nb-card-footer>
 </nb-card>

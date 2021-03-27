@@ -21,8 +21,7 @@ export class UsuariosCardComponent implements OnInit {
   private async loadUsuarios() {
     await this.dbService.listWithUIDs<Usuario>('/pessoa')
       .then(usuarios => {
-        this.usuarios = usuarios;
-        this.usuarioQuantidade = this.usuarios.length.toString();
+        this.usuarioQuantidade = usuarios.length.toString();
       }).catch(error => {
         console.log(error);
       });

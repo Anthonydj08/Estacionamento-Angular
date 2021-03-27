@@ -109,11 +109,6 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
                     }
                   }
                 },
-                labelLine: {
-                  normal: {
-                    show: false
-                  }
-                },
               },
             ],
           };

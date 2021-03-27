@@ -4,6 +4,8 @@ import { DbService } from '../../../@core/services/db.service';
 import { NbToastrService, NbDialogRef } from '@nebular/theme';
 import { EntradaSaidaComponent } from '../entrada-saida.component';
 import { Router } from '@angular/router';
+import { CameraCardComponent } from '../../inicio/camera-card/camera-card.component';
+import { CommonService } from '../../../@core/services/common.service';
 
 @Component({
   selector: 'ngx-entrada-saida-entrada',
@@ -17,7 +19,11 @@ export class EntradaSaidaEntradaComponent implements OnInit {
   data: any;
   public entrada: string;
   
-  constructor(private dbService: DbService, private toastrService: NbToastrService, private ref: NbDialogRef<EntradaSaidaComponent>) {
+  constructor(private dbService: DbService,
+    private toastrService: NbToastrService,
+    private ref: NbDialogRef<EntradaSaidaComponent>,
+    private _commonService: CommonService,
+    ) {
 
   }
 
@@ -55,6 +61,7 @@ export class EntradaSaidaEntradaComponent implements OnInit {
           this.novaEntrada;
           this.showToast("Entrada cadastrado com sucesso", "success");
           this.ref.close();
+          this._commonService.callCommonMethod();
         }).catch(error => {
           console.log(error);
           this.showToast("Erro ao cadastrar entrada", "danger");
@@ -68,6 +75,7 @@ export class EntradaSaidaEntradaComponent implements OnInit {
       { status });
   }
   public cancelar() {
+    this._commonService.callCommonMethod();
     this.ref.close();
   }
 

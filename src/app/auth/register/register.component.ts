@@ -33,16 +33,11 @@ export class NgxRegisterComponent implements OnInit {
         case 'auth/email-already-in-use':
           message = 'E-mail em uso.'
           break;
-
         case 'auth/invalid-email':
           message = 'E-mail inválido.'
           break;
       }
       this.showToast(message,"danger");
-      console.log(error);
-    } finally {
-  
-      //
     }
   } 
 

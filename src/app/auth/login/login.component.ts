@@ -40,10 +40,6 @@ export class NgxLoginComponent implements OnInit {
           message = 'Usuário não encontrado';
       }
       this.showToast(message, "danger");
-      console.log(error);
-    } finally {
-
-      //
     }
   }
   showToast(mensagem, status) {

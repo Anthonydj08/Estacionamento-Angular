@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { Veiculo } from '../../../@core/model/veiculo';
+import { CommonService } from '../../../@core/services/common.service';
 import { DbService } from '../../../@core/services/db.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class VeiculoInsertComponent implements OnInit {
   loading: boolean;
   data: any;
 
-  constructor(private dbService: DbService, private toastrService: NbToastrService, protected ref: NbDialogRef<VeiculoInsertComponent>) { }
+  constructor(private dbService: DbService, private toastrService: NbToastrService, protected ref: NbDialogRef<VeiculoInsertComponent>, private _commonService: CommonService) { }
 
   ngOnInit() {
     this.novoVeiculo = new Veiculo();
@@ -50,6 +51,7 @@ export class VeiculoInsertComponent implements OnInit {
       .then(() => {
         this.novoVeiculo;
         this.showToast("Veiculo cadastrado com sucesso", "success");
+        this._commonService.callCommonMethod();
         this.ref.close();
       }).catch(error => {
         console.log(error);
@@ -64,6 +66,7 @@ export class VeiculoInsertComponent implements OnInit {
       { status });
   }
   public cancelar() {
+    this._commonService.callCommonMethod();
     this.ref.close();
   }
 

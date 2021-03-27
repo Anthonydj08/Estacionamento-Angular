@@ -7,6 +7,8 @@ import { EntradaSaidaEntradaComponent } from '../../entrada-saida/entrada-saida-
 import { DbService } from '../../../@core/services/db.service';
 
 import * as cocoSSD from '@tensorflow-models/coco-ssd';
+import { Router } from '@angular/router';
+import { CommonService } from '../../../@core/services/common.service';
 
 
 declare const leitura: any;
@@ -28,19 +30,24 @@ export class CameraCardComponent implements OnInit {
 
   @ViewChild("placa", { static: false })
   public placa: ElementRef;
-
-  public captures: Array<any>;
   public fotoBase64: any;
   public fotoConvertida: any;
   public result: any;
   public veiculo: any;
   public executado: boolean;
   public veiculos: Veiculo[];
+  public req: any;
+  public count: boolean = true;
 
-
-  constructor(private dialogService: NbDialogService, public http: HttpClient, private dbService: DbService, private toastrService: NbToastrService) {
-    this.captures = [];
-    this.executado = false
+  constructor(
+    private dialogService: NbDialogService,
+    public http: HttpClient,
+    private dbService: DbService,
+    private toastrService: NbToastrService,
+    private _router: Router,
+    private _commonService: CommonService,
+  ) {
+    this.executado = false;
   }
 
   open(mensagem) {
@@ -51,30 +58,15 @@ export class CameraCardComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     this.webcam_init();
-
     let self = this
     this.videoTensor.onloadeddata = function () {
       self.predictWithCocoModel();
     };
-
   }
 
-  // public ngAfterViewInit() {
-  //   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  //     navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-  //       this.video.nativeElement.srcObject = stream;
-  //       this.video.nativeElement.play();
-  //     });
-  //   }
-  // }
-
-
   public capture() {
-    //var context = this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 540, 480);
-    this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
     this.fotoBase64 = this.canvas.nativeElement.toDataURL("image/png");
     this.fotoConvertida = this.fotoBase64.substring(this.fotoBase64.indexOf(",") + 1)
     leitura(this.fotoConvertida);
@@ -83,11 +75,10 @@ export class CameraCardComponent implements OnInit {
       if (this.placa.nativeElement.textContent == "Placa não identificada") {
         this.open("Placa não identificada")
       } else {
-        this.result = this.placa.nativeElement.textContent
-        this.veiculo = JSON.parse(this.result);
+        this.veiculo = JSON.parse(this.placa.nativeElement.textContent);
         this.verificarPlaca();
       }
-
+      this.executado = false;
     }, 3000);
   }
 
@@ -110,17 +101,19 @@ export class CameraCardComponent implements OnInit {
     } else {
       this.showToast("Placa não identificada", "warning");
       console.log("ALPR não achou a placa");
+      this._commonService.callCommonMethod();
     }
 
   }
 
   private async irParaEntrada(veiculo) {
+    console.log(document)
     this.executado = false
     this.dialogService.open(EntradaSaidaEntradaComponent, {
       context: {
         data: veiculo,
       },
-    })
+    });
   }
 
   showToast(mensagem, status) {
@@ -130,13 +123,13 @@ export class CameraCardComponent implements OnInit {
       { status });
   }
 
-
   public async predictWithCocoModel() {
     const model = await cocoSSD.load();
-    this.detectFrame(this.videoTensor, model);
-    console.log('model loaded');
+    if (this.executado == false) {
+      this.detectFrame(this.videoTensor, model);
+      console.log('model loaded');
+    }
   }
-
 
   webcam_init() {
     this.videoTensor = <HTMLVideoElement>document.getElementById("vid");
@@ -159,10 +152,22 @@ export class CameraCardComponent implements OnInit {
   detectFrame = (videoTensor, model) => {
     model.detect(videoTensor).then(predictions => {
       this.renderPredictions(predictions);
-      requestAnimationFrame(() => {
+      this.req = requestAnimationFrame(() => {
         this.detectFrame(videoTensor, model);
+        console.log(predictions);
       });
+      if (this.executado == false && predictions.length != 0 && predictions[0].class == "car") {
+        setTimeout(() => {
+          cancelAnimationFrame(this.req);
+          if (this.count == true) {
+            console.log("É um carro");
+            this.capture();
+            this.count = false;
+          }
+        }, 2000);
+      }
     });
+
   }
 
   renderPredictions = predictions => {
@@ -194,17 +199,6 @@ export class CameraCardComponent implements OnInit {
       const textWidth = ctx.measureText(prediction.class).width;
       const textHeight = parseInt(font, 10); // base 10
       ctx.fillRect(x, y, textWidth + 4, textHeight + 4);
-
-
-      if (prediction.class == "car" && this.executado == false) {
-        console.log("é um carro");
-        this.executado = true
-        setTimeout(() => {
-          this.capture();
-        }, 2000);
-      }
-
-
     });
 
     predictions.forEach(prediction => {
@@ -215,6 +209,4 @@ export class CameraCardComponent implements OnInit {
       ctx.fillText(prediction.class, x, y);
     });
   };
-
-
 }

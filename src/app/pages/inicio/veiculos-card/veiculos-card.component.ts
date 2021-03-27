@@ -21,8 +21,7 @@ export class VeiculosCardComponent implements OnInit {
   private async loadVeiculos() {
     await this.dbService.listWithUIDs<Veiculo>('/veiculo')
       .then(veiculos => {
-        this.veiculos = veiculos;
-        this.veiculoQuantidade = this.veiculos.length.toString();
+        this.veiculoQuantidade = veiculos.length.toString();
       }).catch(error => {
         console.log(error);
       });

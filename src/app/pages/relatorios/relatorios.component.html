@@ -4,7 +4,6 @@
   </nb-card-header>
 
   <nb-card-body>
-    <input #search class="search" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
     <ng2-smart-table [settings]="settings" [source]="entradasESaidas" id="contentToConvert">
     </ng2-smart-table>
   </nb-card-body>

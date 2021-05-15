@@ -148,26 +148,26 @@ export class CameraCardComponent implements OnInit {
         };
       });
   }
-
   detectFrame = (videoTensor, model) => {
-    model.detect(videoTensor).then(predictions => {
-      this.renderPredictions(predictions);
-      this.req = requestAnimationFrame(() => {
-        this.detectFrame(videoTensor, model);
-        console.log(predictions);
+    setTimeout(() => {
+      model.detect(videoTensor).then(predictions => {
+        this.renderPredictions(predictions);
+        this.req = requestAnimationFrame(() => {
+          this.detectFrame(videoTensor, model);
+          console.log(videoTensor, predictions);
+        });
+        if (this.executado == false && predictions.length != 0 && predictions[0].class == "car") {
+          setTimeout(() => {
+            cancelAnimationFrame(this.req);
+            if (this.count == true) {
+              console.log("É um carro");
+              this.capture();
+              this.count = false;
+            }
+          }, 2000);
+        }
       });
-      if (this.executado == false && predictions.length != 0 && predictions[0].class == "car") {
-        setTimeout(() => {
-          cancelAnimationFrame(this.req);
-          if (this.count == true) {
-            console.log("É um carro");
-            this.capture();
-            this.count = false;
-          }
-        }, 2000);
-      }
-    });
-
+    }, 250);
   }
 
   renderPredictions = predictions => {

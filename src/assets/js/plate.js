@@ -4,20 +4,14 @@ function leitura(foto64) {
     var url = "https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=br&secret_key=" + secret_key;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
-    var placa = ""
 
     // Send POST data and display response
     xhr.send(foto64); // Replace with base64 string of an actual image
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-            console.log(xhr.responseText);
             document.getElementById("response").innerHTML = xhr.responseText;
         } else {
             document.getElementById("response").innerHTML = "Placa não identificada";
         }
     }
-    setTimeout(() => {
-        return placa
-    }, 3000);
-
 }

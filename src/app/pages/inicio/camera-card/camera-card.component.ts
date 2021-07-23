@@ -30,8 +30,8 @@ export class CameraCardComponent implements OnInit {
 
   @ViewChild("placa", { static: false })
   public placa: ElementRef;
+  public foto: any;
   public fotoBase64: any;
-  public fotoConvertida: any;
   public result: any;
   public veiculo: any;
   public executado: boolean;
@@ -50,10 +50,10 @@ export class CameraCardComponent implements OnInit {
     this.executado = false;
   }
 
-  open(mensagem) {
+  open(placa) {
     this.dialogService.open(ShowcaseDialogComponent, {
       context: {
-        data: mensagem,
+        data: placa,
       },
     });
   }
@@ -67,9 +67,9 @@ export class CameraCardComponent implements OnInit {
   }
 
   public capture() {
-    this.fotoBase64 = this.canvas.nativeElement.toDataURL("image/png");
-    this.fotoConvertida = this.fotoBase64.substring(this.fotoBase64.indexOf(",") + 1)
-    leitura(this.fotoConvertida);
+    this.foto = this.canvas.nativeElement.toDataURL("image/png");
+    this.fotoBase64 = this.foto.substring(this.foto.indexOf(",") + 1)
+    leitura(this.fotoBase64);
 
     setTimeout(() => {
       if (this.placa.nativeElement.textContent == "Placa não identificada") {
@@ -87,11 +87,9 @@ export class CameraCardComponent implements OnInit {
       await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
         .then(veiculos => {
           this.veiculos = veiculos;
-          if (veiculos.length == 0) {
-            this.open(this.veiculo.results[0])
-            console.log("não achou ir para tela de cadastrar veiculo");
+          if (!this.veiculos) {
+            this.open(this.veiculo.results[0]);
           } else {
-            console.log("achou IR PARA TELA DE REGISTRAR ENTRADA VEICULO");
             this.showToast("Veículo encontrado!", "success");
             this.irParaEntrada(veiculos[0]);
           }
@@ -100,14 +98,12 @@ export class CameraCardComponent implements OnInit {
         });
     } else {
       this.showToast("Placa não identificada", "warning");
-      console.log("ALPR não achou a placa");
       this._commonService.callCommonMethod();
     }
 
   }
 
   private async irParaEntrada(veiculo) {
-    console.log(document)
     this.executado = false
     this.dialogService.open(EntradaSaidaEntradaComponent, {
       context: {
@@ -154,13 +150,11 @@ export class CameraCardComponent implements OnInit {
         this.renderPredictions(predictions);
         this.req = requestAnimationFrame(() => {
           this.detectFrame(videoTensor, model);
-          console.log(videoTensor, predictions);
         });
         if (this.executado == false && predictions.length != 0 && predictions[0].class == "car") {
           setTimeout(() => {
             cancelAnimationFrame(this.req);
             if (this.count == true) {
-              console.log("É um carro");
               this.capture();
               this.count = false;
             }

@@ -27,7 +27,6 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
     await this.dbService.listWithUIDs<numVagas>('/numVagas')
       .then(numVagas => {
         this.numVagas = numVagas;
-        console.log(numVagas);
       }).catch(error => {
         console.log(error);
       });
@@ -44,14 +43,18 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
     await this.load()
       .then(num => {
         
-        this.ocupadas = 0
-        console.log(this.entradaESaidas);
+        this.ocupadas = 0;
         for (let i = 0; i < this.entradaESaidas.length; i++) {
           if (!this.entradaESaidas[i].saida) {
             this.ocupadas++
           }
         }
-        this.disponiveis = parseInt(this.numVagas[0].vagas) - this.ocupadas
+        if(this.numVagas[0].vagas != "0"){
+          this.disponiveis = parseInt(this.numVagas[0].vagas) - this.ocupadas
+        } else{
+          this.disponiveis = 0;
+        }
+        
       })
   }
 

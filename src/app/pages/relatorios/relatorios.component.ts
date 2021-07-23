@@ -87,8 +87,7 @@ export class RelatoriosComponent implements OnInit {
         head: this.headRows(),
         body: data,
       })
-      doc.save('table.pdf')
+      doc.save('tabela.pdf')
     })
-    console.log(this.entradasESaidas)
   }
 }

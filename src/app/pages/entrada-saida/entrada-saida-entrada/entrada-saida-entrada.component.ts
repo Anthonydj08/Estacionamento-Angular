@@ -28,7 +28,6 @@ export class EntradaSaidaEntradaComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.novaEntrada = new EntradaESaida();
     if (this.data) {
       this.novaEntrada = this.data
@@ -36,7 +35,6 @@ export class EntradaSaidaEntradaComponent implements OnInit {
     }
     this.novaEntrada.entrada = new Date().toString();
     this.entrada = new Date(this.novaEntrada.entrada).toLocaleString();
-    console.log(this.novaEntrada.entrada);
 
     document.getElementById("inputTipo").addEventListener("keyup", this.forceFirstInputUppercase, false);
   }
@@ -53,7 +51,7 @@ export class EntradaSaidaEntradaComponent implements OnInit {
 
   insert() {
     this.novaEntrada.entrada = this.entrada;
-    if (!this.novaEntrada.placa) {
+    if (!this.novaEntrada.placa && !this.novaEntrada.entrada && !this.novaEntrada.tipo && !this.novaEntrada.emailUsuario) {
       this.showToast("Erro ao cadastrar entrada", "danger");
     } else {
       this.dbService.insertInList<EntradaESaida>('/entradaesaida', this.novaEntrada)

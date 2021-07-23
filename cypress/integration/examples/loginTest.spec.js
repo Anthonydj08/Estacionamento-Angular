@@ -39,9 +39,9 @@ describe('Login test', () => {
   });
 
   it('Deslogar usuário', () => {
-    cy.visit('http://localhost:4200/pages/inicio').wait(8000);
+    cy.visit('http://localhost:4200/pages/inicio').wait(4000);
     cy.get('.user-container').click();
-    cy.get('.ng-tns-c7-8 > .menu-title').click();
+    cy.get('.ng-tns-c7-7 > .menu-title').click();
     cy.url().should('eq', 'http://localhost:4200/auth/login');
   });
 

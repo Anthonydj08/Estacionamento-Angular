@@ -28,22 +28,10 @@ export class EntradaSaidaListComponent implements OnInit {
       }).catch(error => {
         console.log(error);
       });
-      this.gerarRelatorio()
+      
   }
 
-  gerarRelatorio() {
-    this.dados = []
-    for (var i = 0; i <= this.entradaESaidas.length; i++) {
-      this.dados.push({
-        id: i,
-        placa: this.entradaESaidas[i].placa,
-        tipo: this.entradaESaidas[i].tipo,
-        email: this.entradaESaidas[i].emailUsuario,
-        entrada: this.entradaESaidas[i].entrada,
-        saida: this.entradaESaidas[i].saida,
-      })
-    }    
-  }
+  
   
 
   // editar(usuario) {
@@ -74,15 +62,12 @@ export class EntradaSaidaListComponent implements OnInit {
   }
 
   selecionado(event) {
-    console.log(event.data);
     this.router.navigate(['/pages/entrada-saida/mostrar'], { queryParams: { value: JSON.stringify(event.data) } });
   }
   editar(event) {
     this.selecionado(event);
   }
   remove(event) {
-    console.log(event);
-
     this.dbService.remove('/entradaesaida', event.data.uid)
       .then(() => {
         this.showToast('Entrada/Saida removida', 'warning');
@@ -114,10 +99,6 @@ export class EntradaSaidaListComponent implements OnInit {
     columns: {
       placa: {
         title: 'Placa',
-        type: 'string',
-      },
-      codigo: {
-        title: 'Código',
         type: 'string',
       },
       tipo: {

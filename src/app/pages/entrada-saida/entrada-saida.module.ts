@@ -19,7 +19,6 @@ import { EntradaSaidaRoutingModule } from './entrada-saida-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { EntradaSaidaComponent } from './entrada-saida.component';
 import { EntradaSaidaEntradaComponent } from './entrada-saida-entrada/entrada-saida-entrada.component';
-import { EntradaSaidaSaidaComponent } from './entrada-saida-saida/entrada-saida-saida.component';
 import { EntradaSaidaListComponent } from './entrada-saida-list/entrada-saida-list.component';
 import { EntradaSaidaMostrarComponent } from './entrada-saida-mostrar/entrada-saida-mostrar.component';
 
@@ -45,7 +44,6 @@ import { EntradaSaidaMostrarComponent } from './entrada-saida-mostrar/entrada-sa
     EntradaSaidaComponent,
     EntradaSaidaListComponent,
     EntradaSaidaEntradaComponent,
-    EntradaSaidaSaidaComponent,
     EntradaSaidaMostrarComponent,
   ],
   

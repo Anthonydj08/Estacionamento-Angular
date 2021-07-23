@@ -10,8 +10,9 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="inputCodigo" class="label">Código</label>
-                    <input type="number" nbInput fullWidth id="inputCodigo" placeholder="Código" [(ngModel)]="novaEntrada.codigo">
+                    <label for="inputEntrada" class="label">Entrada</label>
+                    <input nbInput placeholder="Data" [nbDatepicker]="entrada" [(ngModel)]="novaEntrada.entrada">
+                    <nb-datepicker #entrada format="dd/MM/yyyy HH:mm:ss"></nb-datepicker>
                 </div>
             </div>
         </div>
@@ -29,17 +30,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputEntrada" class="label">Entrada</label>
-                    <!-- <input nbInput placeholder="Data" [nbDatepicker]="entrada" [(ngModel)]="novaEntrada.entrada">
-                    <nb-datepicker #entrada format="dd/MM/yyyy HH:mm:ss"></nb-datepicker> -->
-
-                </div>
-            </div>
-        </div>
-
     </nb-card-body>
     <nb-card-footer>
         <button id="CancelButton" (click)="cancelar()" nbButton outline status="danger">Cancelar</button>

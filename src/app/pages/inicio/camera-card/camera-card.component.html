@@ -8,13 +8,6 @@
         <button id="snap" (click)="capture()" nbButton outline status="primary">Tirar foto</button>
     </nb-card-header>
     <nb-card-body>
-        <!-- <canvas #canvas id="canvas" width="540" height="480"></canvas>
-        <div><video #video id="video" autoplay></video></div>
-         <ul>
-            <li *ngFor="let c of captures">
-                <img src="{{ c }}" height="50" />
-            </li>
-        </ul>-->
         <p #placa id="response" style="display: none;"></p>
         <video hidden id="vid" width="540" height="480"></video>
         <canvas #canvas id="canvas"></canvas>

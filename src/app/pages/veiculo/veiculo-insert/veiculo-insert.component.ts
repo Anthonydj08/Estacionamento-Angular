@@ -44,7 +44,7 @@ export class VeiculoInsertComponent implements OnInit {
   }
 
   insert() {
-    if(!this.novoVeiculo.modelo){
+    if(!this.novoVeiculo.modelo && !this.novoVeiculo.cor && !this.novoVeiculo.fabricante && !this.novoVeiculo.placa && !this.novoVeiculo.tipo){
       this.showToast("Erro ao cadastrar veículo", "danger");
     } else{
       this.dbService.insertInList<Veiculo>('/veiculo', this.novoVeiculo)

@@ -27,9 +27,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/veiculo/list',
   },
   {
+    title: 'Veículos não permitidos',
+    icon: 'close-outline',
+    link: '/pages/veiculos-proibidos',
+  },
+  {
     title: 'Relatórios',
     icon: 'pie-chart-outline',
     link: '/pages/relatorios',
+  },
+  {
+    title: 'Inserir funcionário',
+    icon: 'people-outline',
+    link: '/pages/register',
   },
   {
     title: 'Configurações',

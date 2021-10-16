@@ -7,8 +7,9 @@ import { EntradaSaidaEntradaComponent } from '../../entrada-saida/entrada-saida-
 import { DbService } from '../../../@core/services/db.service';
 
 import * as cocoSSD from '@tensorflow-models/coco-ssd';
-import { Router } from '@angular/router';
 import { CommonService } from '../../../@core/services/common.service';
+import { numVagas } from '../../../@core/model/numVagas';
+import { EntradaESaida } from '../../../@core/model/entradaESaida';
 
 
 declare const leitura: any;
@@ -29,102 +30,30 @@ export class CameraCardComponent implements OnInit {
   public canvas: ElementRef;
 
   @ViewChild("placa", { static: false })
+
   public placa: ElementRef;
   public foto: any;
-  public fotoBase64: any;
+  public fotoConvertida: any;
   public result: any;
   public veiculo: any;
-  public executado: boolean;
-  public veiculos: Veiculo[];
   public req: any;
   public count: boolean = true;
+  hasVagas: boolean;
 
   constructor(
     private dialogService: NbDialogService,
     public http: HttpClient,
     private dbService: DbService,
     private toastrService: NbToastrService,
-    private _router: Router,
     private _commonService: CommonService,
-  ) {
-    this.executado = false;
-  }
-
-  open(placa) {
-    this.dialogService.open(ShowcaseDialogComponent, {
-      context: {
-        data: placa,
-      },
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.webcam_init();
-    let self = this
+    let self = this;
     this.videoTensor.onloadeddata = function () {
       self.predictWithCocoModel();
     };
-  }
-
-  public capture() {
-    this.foto = this.canvas.nativeElement.toDataURL("image/png");
-    this.fotoBase64 = this.foto.substring(this.foto.indexOf(",") + 1)
-    leitura(this.fotoBase64);
-
-    setTimeout(() => {
-      if (this.placa.nativeElement.textContent == "Placa não identificada") {
-        this.open("Placa não identificada")
-      } else {
-        this.veiculo = JSON.parse(this.placa.nativeElement.textContent);
-        this.verificarPlaca();
-      }
-      this.executado = false;
-    }, 3000);
-  }
-
-  private async verificarPlaca() {
-    if (this.veiculo.results.length != 0) {
-      await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
-        .then(veiculos => {
-          this.veiculos = veiculos;
-          if (!this.veiculos) {
-            this.open(this.veiculo.results[0]);
-          } else {
-            this.showToast("Veículo encontrado!", "success");
-            this.irParaEntrada(veiculos[0]);
-          }
-        }).catch(error => {
-          console.log(error);
-        });
-    } else {
-      this.showToast("Placa não identificada", "warning");
-      this._commonService.callCommonMethod();
-    }
-
-  }
-
-  private async irParaEntrada(veiculo) {
-    this.executado = false
-    this.dialogService.open(EntradaSaidaEntradaComponent, {
-      context: {
-        data: veiculo,
-      },
-    });
-  }
-
-  showToast(mensagem, status) {
-    this.toastrService.show(
-      status || "Success",
-      mensagem,
-      { status });
-  }
-
-  public async predictWithCocoModel() {
-    const model = await cocoSSD.load();
-    if (this.executado == false) {
-      this.detectFrame(this.videoTensor, model);
-      console.log('model loaded');
-    }
   }
 
   webcam_init() {
@@ -144,6 +73,13 @@ export class CameraCardComponent implements OnInit {
         };
       });
   }
+
+  public async predictWithCocoModel() {
+    const model = await cocoSSD.load();
+    this.detectFrame(this.videoTensor, model);
+    console.log('model loaded');
+  }
+
   detectFrame = (videoTensor, model) => {
     setTimeout(() => {
       model.detect(videoTensor).then(predictions => {
@@ -151,15 +87,6 @@ export class CameraCardComponent implements OnInit {
         this.req = requestAnimationFrame(() => {
           this.detectFrame(videoTensor, model);
         });
-        if (this.executado == false && predictions.length != 0 && predictions[0].class == "car") {
-          setTimeout(() => {
-            cancelAnimationFrame(this.req);
-            if (this.count == true) {
-              this.capture();
-              this.count = false;
-            }
-          }, 2000);
-        }
       });
     }, 250);
   }
@@ -202,5 +129,134 @@ export class CameraCardComponent implements OnInit {
       ctx.fillStyle = "#000000";
       ctx.fillText(prediction.class, x, y);
     });
+
+    this.verificaVeiculo(predictions);
   };
+
+  //verifica se existe um carro
+  verificaVeiculo(predictions) {
+    if (predictions.length != 0 && predictions[0].class == "car") {
+      setTimeout(() => {
+        cancelAnimationFrame(this.req);
+        this.verificaLotacao().then(() => {
+          if (this.count == true && this.hasVagas) {
+            this.capture();
+            this.count = false;
+          }
+
+          if (!this.hasVagas) {
+            this.toastrService.warning("Não há vagas disponíveis", "Estacionamento lotado", { preventDuplicates: true });
+          }
+        });
+
+      }, 2000);
+    }
+
+  }
+  async verificaLotacao() {
+    var vagasTotais = 0;
+    var ocupadas = 0;
+
+    await this.dbService.listWithUIDs<numVagas>('/numVagas').then(numVagas => {
+      vagasTotais = parseInt(numVagas[0].vagas);
+    }).catch(error => {
+      console.log(error);
+    });
+
+    await this.dbService.listWithUIDs<EntradaESaida>('/entradaesaida').then(entradaESaidas => {
+      for (let i = 0; i < entradaESaidas.length; i++) {
+        if (!entradaESaidas[i].saida) {
+          ocupadas++;
+        }
+      }
+    }).then(() => {
+      var vagasDisponiveis = vagasTotais - ocupadas;
+      if (vagasDisponiveis > 0) {
+        this.hasVagas = true;
+      } else {
+        this.hasVagas = false;
+      }
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  public capture() {
+    this.foto = this.canvas.nativeElement.toDataURL("image/png");
+    this.fotoConvertida = this.foto.substring(this.foto.indexOf(",") + 1)
+    // leitura(this.fotoConvertida);
+    this.leituras(this.fotoConvertida).then((res) => {
+
+      if (this.placa.nativeElement.textContent == "Placa não identificada") {
+        this.dialogCadastrarVeiculo("Placa não identificada")
+      } else {
+        this.veiculo = JSON.parse(this.placa.nativeElement.textContent);
+        this.verificarPlaca();
+      }
+    });
+  }
+
+  async leituras(foto64) {
+    var secret_key = "sk_fde22bcc8fe54ef476718757";
+    var url = "https://api.openalpr.com/v2/recognize_bytes?recognize_vehicle=1&country=br&secret_key=" + secret_key;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+
+    // Send POST data and display response
+    xhr.send(foto64); // Replace with base64 string of an actual image
+    let promise = new Promise(resolve => {
+      xhr.onreadystatechange = function () {
+        console.log(xhr, xhr.readyState);
+        if (xhr.readyState == 4) {
+          resolve(document.getElementById("response").innerHTML = xhr.responseText);
+        } else {
+          document.getElementById("response").innerHTML = "Placa não identificada";
+        }
+      }
+    });
+    let result: any = await promise;
+    return result
+  }
+
+  dialogCadastrarVeiculo(mensagem) {
+    this.dialogService.open(ShowcaseDialogComponent, {
+      context: {
+        data: mensagem,
+      },
+    });
+  }
+
+  private async verificarPlaca() {
+    if (this.veiculo.results.length != 0) {
+      await this.dbService.search<Veiculo>('/veiculo', 'placa', this.veiculo.results[0].plate)
+        .then(veiculos => {
+          if (!veiculos[0]) {
+            this.dialogCadastrarVeiculo(this.veiculo.results[0])
+          } else {
+            this.showToast("Veículo encontrado!", "", "success");
+            this.irParaEntrada(veiculos[0]);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.showToast("Placa não identificada", "", "warning");
+      this._commonService.callCommonMethod();
+    }
+  }
+
+  private async irParaEntrada(veiculo) {
+    this.dialogService.open(EntradaSaidaEntradaComponent, {
+      context: {
+        data: veiculo,
+      },
+    });
+  }
+
+  showToast(mensagem, descricao, status) {
+    this.toastrService.show(
+      descricao,
+      mensagem,
+      { status });
+  }
 }

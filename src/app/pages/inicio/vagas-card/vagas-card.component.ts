@@ -20,7 +20,7 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
   disponiveis: any;
   ocupadas: any;
 
-  constructor(private theme: NbThemeService, private dbService: DbService, ) {
+  constructor(private theme: NbThemeService, private dbService: DbService) {
   }
 
   private async load() {
@@ -42,19 +42,18 @@ export class VagasCardComponent implements AfterViewInit, OnDestroy {
   private async atualizar() {
     await this.load()
       .then(num => {
-        
         this.ocupadas = 0;
         for (let i = 0; i < this.entradaESaidas.length; i++) {
           if (!this.entradaESaidas[i].saida) {
             this.ocupadas++
           }
         }
-        if(this.numVagas[0].vagas != "0"){
+        if (this.numVagas[0].vagas != "0") {
           this.disponiveis = parseInt(this.numVagas[0].vagas) - this.ocupadas
-        } else{
+        } else {
           this.disponiveis = 0;
         }
-        
+
       })
   }
 

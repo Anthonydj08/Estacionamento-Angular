@@ -17,6 +17,7 @@ export class EntradaSaidaEntradaComponent implements OnInit {
   novaEntrada: EntradaESaida;
   entradas: EntradaESaida[];
   data: any;
+  data2: any;
   public entrada: string;
   
   constructor(private dbService: DbService,
@@ -30,8 +31,10 @@ export class EntradaSaidaEntradaComponent implements OnInit {
   ngOnInit() {
     this.novaEntrada = new EntradaESaida();
     if (this.data) {
-      this.novaEntrada = this.data
-      this.novaEntrada.emailUsuario = this.data.usuarioEmail
+      this.novaEntrada = this.data;
+      this.novaEntrada.emailUsuario = this.data.usuarioEmail;
+      this.novaEntrada.placa = this.data2.plate;
+      this.novaEntrada.tipo = this.data2.vehicle.body_type[0].name[0].toUpperCase() + this.data.vehicle.body_type[0].name.substr(1).toLowerCase();
     }
     this.novaEntrada.entrada = new Date().toString();
     this.entrada = new Date(this.novaEntrada.entrada).toLocaleString();

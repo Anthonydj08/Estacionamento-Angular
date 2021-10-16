@@ -12,7 +12,7 @@ import {
   NbInputModule
 } from '@nebular/theme';
 import { NgxLoginComponent } from './login/login.component';
-import { NgxRegisterComponent } from './register/register.component';
+// import { NgxRegisterComponent } from './register/register.component';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 
@@ -32,7 +32,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   declarations: [
     // ... here goes our new components
     NgxLoginComponent,
-    NgxRegisterComponent,
+    // NgxRegisterComponent,
 
   ],
   providers:[

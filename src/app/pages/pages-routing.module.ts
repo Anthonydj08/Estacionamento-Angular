@@ -6,6 +6,8 @@ import { InicioComponent } from './inicio/inicio.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ConfiguracoesComponent } from './configuracoes/pages/configuracoes/configuracoes.component';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
+import { VeiculosProibidosComponent } from './veiculos-proibidos/veiculos-proibidos.component';
+import { NgxRegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [{
@@ -37,8 +39,16 @@ const routes: Routes = [{
         .then(m => m.NgxAuthModule),
     },
     {
+      path: 'veiculos-proibidos',
+      component: VeiculosProibidosComponent,
+    },
+    {
       path: 'relatorios',
       component: RelatoriosComponent,
+    },
+    {
+      path: 'register',
+      component: NgxRegisterComponent,
     },
     {
       path: 'configuracoes',

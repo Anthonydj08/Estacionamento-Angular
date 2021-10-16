@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NbAuthComponent } from '@nebular/auth';
 import { NgxLoginComponent } from './login/login.component';
-import { NgxRegisterComponent } from './register/register.component';
+// import { NgxRegisterComponent } from './register/register.component';
 import { LoginGuard } from '../@core/guards/login.guard';
 
 export const routes: Routes = [
@@ -16,11 +16,11 @@ export const routes: Routes = [
         component: NgxLoginComponent,
         // <---
       },
-      {
-        path: 'register',
-        component: NgxRegisterComponent,
-         // <---
-      },
+      // {
+      //   path: 'register',
+      //   component: NgxRegisterComponent,
+      //    // <---
+      // },
     ],
   },
 ];

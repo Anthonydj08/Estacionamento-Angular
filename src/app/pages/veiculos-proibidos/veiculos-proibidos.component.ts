@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { VeiculoEditComponent } from '../veiculo-edit/veiculo-edit.component';
-import { VeiculoInsertComponent } from '../veiculo-insert/veiculo-insert.component';
 import { Router } from '@angular/router';
-import { DbService } from '../../../@core/services/db.service';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
-import { Veiculo } from '../../../@core/model/veiculo';
-@Component({
-  selector: 'ngx-veiculo-list',
-  templateUrl: './veiculo-list.component.html',
-  styleUrls: ['./veiculo-list.component.scss']
-})
-export class VeiculoListComponent implements OnInit {
+import { Veiculo } from '../../@core/model/veiculo';
+import { DbService } from '../../@core/services/db.service';
 
-  veiculos: Veiculo[];
+@Component({
+  selector: 'ngx-veiculos-proibidos',
+  templateUrl: './veiculos-proibidos.component.html',
+  styleUrls: ['./veiculos-proibidos.component.scss']
+})
+export class VeiculosProibidosComponent implements OnInit {
+
+  veiculosProibidos: Veiculo[];
 
   constructor(private dbService: DbService, public router: Router, private dialogService: NbDialogService, private toastrService: NbToastrService) {
 
@@ -22,32 +21,20 @@ export class VeiculoListComponent implements OnInit {
   }
 
   private async loadVeiculos() {
-    await this.dbService.listWithUIDs<Veiculo>('/veiculo')
+    await this.dbService.listWithUIDs<Veiculo>('/veiculosProibidos')
       .then(veiculos => {
-        this.veiculos = veiculos;
+        this.veiculosProibidos = veiculos;
       }).catch(error => {
         console.log(error);
       });
   }
 
-  editar(veiculo) {
-    this.dialogService.open(VeiculoEditComponent, {
-      context: {
-        editVeiculo: veiculo.data
-      }
-    });
-  }
-
   remove(veiculo) {
-    this.dbService.remove('/veiculo', veiculo.data.uid)
+    this.dbService.remove('/veiculosProibidos', veiculo.data.uid)
       .then(() => {
-        this.showToast("Veículo removido", "warning");
+        this.showToast("Veículo removido da lista", "warning");
         this.loadVeiculos();
       });
-  }
-
-  cadastrar(){
-    this.dialogService.open(VeiculoInsertComponent)    
   }
 
   showToast(mensagem, status) {
